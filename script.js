@@ -60,7 +60,6 @@ function setup () {
 
     $("#startBtn").on("click", function startQuiz () {
         showOpeningMessage();
-        $('welcomeDiv').addClass('hidden');
         $('hero-text').addClass('hidden')
         $('#startBtn').addClass('hidden');
         $('.rollQuestions').removeClass('hidden');
@@ -69,7 +68,7 @@ function setup () {
     $(".rollQuestions").on("click", function () {
         $("#instructionsModal").modal('hide');
         console.log('Rolling quiz. Time left = ' + timeLeft);
-        $(".rollQuestions").addClass('hidden');
+        $("#rollQuestions").addClass('hidden');
         alert("The timer will start with 75 seconds on the clock as soon as you click OK.")
         startTimer();
         showQuestionAndAnswer(nextQuestion)
@@ -77,9 +76,9 @@ function setup () {
 }
 
 function showOpeningMessage () {
-    $(welcomeDiv).text("Hello")
-    // "Following are five questions related to the books and blockbuster HBO series. Once you click start, you'll have 75 seconds to choose from several answers. Easy right? Except, if you answer incorrectly, you'll get a time penalty and 15 seconds will be taken off the clock. Ready? Good luck!")
-    // $(welcomeDiv).append(`<button id="rollQuestions" class="startBtnDiv btn btn-warning">Start quiz</button>`);
+    $('#welcomeDiv').removeClass('hidden');
+    $('#welcomeDiv').append("Ready to Start?");
+    $('#welcomeDiv').append(`<div><button id="Yes" class="btn bg-light rollQuestions">Yes</button></div>`);
 }
 
 function startTimer() {
