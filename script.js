@@ -54,7 +54,8 @@ function setup () {
 
     $(".answerListItem").on('click', function () {
         var chosen = this.QNAObject.answers[i];
-        checkAnswer(QNAObject.rightAnswer, chosen);
+        console.log("Clicked on answerListItem: ", chosen)
+        checkAnswer(chosen);
     });
 
     $("#startBtn").on("click", function startQuiz () {
@@ -68,15 +69,11 @@ function setup () {
     $(".rollQuestions").on("click", function () {
         $("#instructionsModal").modal('hide');
         console.log('Rolling quiz. Time left = ' + timeLeft);
-        $("rollQuestions").addClass('hidden');
+        $(".rollQuestions").addClass('hidden');
         alert("The timer will start with 75 seconds on the clock as soon as you click OK.")
         startTimer();
         showQuestionAndAnswer(nextQuestion)
     });
-
-    $(".answerListItem").on("click", function () {
-        checkAnswer
-    })
 }
 
 function showOpeningMessage () {
@@ -91,7 +88,7 @@ function startTimer() {
 }
 
 function stoptimer() {
-    console.log('Timer ran out!');
+    console.log('Timer stopped');
     clearInterval(sid);
     $config.endtime_message ='Timer expired!';
 }
@@ -127,18 +124,21 @@ function showQuestionAndAnswer(nextQuestion) {
 
         for (var i = 0; i < QNAObject.answers.length; i++) {
             var answerOption = QNAObject.answers[i];
-            $(answerList).append(`<div class="col-2"><li><button class="btn btn-warning list-group-item answerListItem">${answerOption}</button></li></div>`);
-            console.log(QNAObject.answers[i])
+            var answerOptionID = QNAObject.answers.indexOf(answerOption);
+            $("#answerList").append(`<li><button class="btn list-group-item answerListItem" id=${answerOptionID}>${answerOption}</button></li>`);
+            console.log("answerOptionID: ",answerOptionID)
         }
     }
 
     nextQuestion++;
-    console.log(nextQuestion);
+    console.log("Right Answer:", QNAObject.rightAnswer);
     return QNAObject.rightAnswer;
 }
 
 function checkAnswer(chosen) {
+    // var chosen = $(select.answerListItem).val();
     console.log("Running checkAnswer function");
+    console.log("This =", this)
     console.log("qao.rightAnswer: ", QNAObject.rightAnswer);
     console.log("Chosen: ", chosen);
 
@@ -182,5 +182,5 @@ $( document ).ready(function() {
 
 setup()
       
-    $("#instructionsModal").modal('show');
+    // $("#instructionsModal").modal('show');
 });

@@ -16,7 +16,6 @@ body {
 
 .answerList {
     text-align: center;
-
 }
 
 .counter {
@@ -33,7 +32,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     position: fixed;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .hero-text {
@@ -47,10 +46,13 @@ body {
     color: blanchedalmond;
 }
 
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
 .topbarDiv {
     height: 80px;
-    /* display: flexbox; */
-    /* position: absolute; */
     background-color: rgb(36, 2, 36);
     font-style: bold;
     font-size: 16px;
