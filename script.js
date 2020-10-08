@@ -219,7 +219,7 @@ function endGame () {
     //If score < highScoreLine, confirm try again
 }
 
-function newHighScore (score) {
+function addHighScore (score) {
     playerObj.name = prompt("Enter your player name");
     playerObj.score = score;
     highScoreArray.push(playerObj);
@@ -227,19 +227,20 @@ function newHighScore (score) {
     return playerObj;
 }
 
+function sortScores () {
+    highScoreArray.sort(function(a,b){return b.score - a.score})
+    var topFive = highScoreArray.slice(0,5);
+    console.log("High Scores after SORT: ", highScoreArray);
+    console.log("Top Five: ", topFive);
+    return topFive
+}
 
 function postHighScores () {
     console.log("High Scores Array", highScoreArray);
+    var topFive = sortScores();
     var rank = 0;
 
-    // array.forEach(function () {
-    //     var name = array.name;
-    //     var score = array.score;
-    //     rank ++;
-    //     $("#highScoresRows").append(`<tr><th scope="row">${rank}</th><td>${name}</td><td>${score}</td></tr>`)
-    // })
-
-    highScoreArray.forEach(player => {
+    topFive.forEach(player => {
         rank ++;
         $("#highScoresRows").append(`<tr><th scope="row">${rank}</th><td>${player.name}</td><td>${player.score}</td></tr>`)
     })
