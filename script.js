@@ -53,42 +53,54 @@ const LS_KEY = "High Scores";
 var highScoreArray = [
     {
         name: "Kamala Harris",
-        score: 10500
-    },
-    {
-        name: "Joe Biden",
-        score: 8000
-    },
-    {
-        name: "Donald Trump",
         score: 2500
     },
     {
+        name: "Joe Biden",
+        score: 1500
+    },
+    {
+        name: "Donald Trump",
+        score: 500
+    },
+    {
         name: "Gavin Newsome",
-        score: 4500
+        score: 1300
     },
     {
         name: "Mike Pence",
-        score: 3000
+        score: 700
     },
     {
-        name: "Jen Jayme",
-        score: 9500
+        name: "Leslie Knope",
+        score: 2500
+    }, 
+    {
+        name: "Ron Swanson",
+        score: 1200
     }
 ];
 
 //FUNCTIONS FOR MAJOR TASKS
 function setup () {
 
+    showOpeningMessage();
+
     $("#startBtn").on("click", function startQuiz () {
-        showOpeningMessage();
-        $('hero-text').addClass('hidden')
+        $("#welcomeDiv").hide();
+        $("#yes").hide();
+        $("#ready").hide();
         $('#startBtn').addClass('hidden');
         $('.rollQuestions').removeClass('hidden');
+        startTimer();
+        showQuestionAndAnswer(nextQuestion)
     });
 
     $(".rollQuestions").on("click", function () {
         $("#instructionsModal").modal('hide');
+        $("#welcomeDiv").hide();
+        $("#yes").hide();
+        $("#ready").hide();
         console.log('Rolling quiz. Time left = ' + timeLeft);
         $("#rollQuestions").removeClass('hidden');
         // alert("The timer will start with 75 seconds on the clock as soon as you click OK.")
@@ -97,8 +109,8 @@ function setup () {
     });
 
     $('#yes').on("click", function () {
-        console.log("Yes button clicked");
         $('#welcomeDiv').addClass('hidden');
+        $('#yes').addClass('hidden');
         $('#ready').addClass('hidden');
     });
 
@@ -107,7 +119,8 @@ function setup () {
 
 function showOpeningMessage () {
     $('#welcomeDiv').removeClass('hidden');
-    $('#ready').append("Ready to Start?");
+    $('#welcomeDiv').show("slow");
+    $('#ready').show("slow");
     $('#yes').removeClass('hidden');
 }
 
@@ -136,13 +149,15 @@ function runClock() {
 }
 
 function showQuestionAndAnswer(nextQuestion) {
+    console.log("Next Question Up: ", nextQuestion)
     $('#rollQuestions').addClass('hidden');
     $('#questionsContainer').removeClass('hidden');
     $('#answerList').removeClass('hidden');
     var QNAObject;
 
-    if (nextQuestion > QandA.length) {
-        endgame();
+    if (nextQuestion === QandA.length || timeLeft < 1) {
+        endGame();
+
     } else {
 
         for (var i = 0; i < QandA.length; i++) {
@@ -164,7 +179,7 @@ function showQuestionAndAnswer(nextQuestion) {
             }
         }
 
-    console.log("Right Answer to question #"+answerOptionID+": ", rightAnswer);
+    console.log("Right Answer to question "+nextQuestion+" is at index: ", rightAnswer);
 
     }
 }
@@ -175,9 +190,8 @@ function clearAnswers() {
 
 function checkAnswer(chosen, rightAnswer) {
 
-    console.log("Running checkAnswer function");
-    // console.log("This =", this)
-    console.log("RightAnswer: ", rightAnswer);
+    // console.log("Running checkAnswer function");
+    // console.log("RightAnswer: ", rightAnswer);
     console.log("Chosen: ", chosen);
 
     if (chosen == rightAnswer) {
@@ -190,6 +204,7 @@ function checkAnswer(chosen, rightAnswer) {
     postScore();    
     clearAnswers();
     nextQuestion++;
+
     showQuestionAndAnswer(nextQuestion)
 }
 
@@ -207,36 +222,61 @@ function resetGame(){
     score = 0;
     nextQuestion = 0;
     location.reload();
+    showOpeningMessage();
     startTimer();
     showQuestionAndAnswer(nextQuestion)
 }
 
 
 function endGame () {
-    //Alert player to results: Game Over! Your Score: ___.
-    alert("GAME OVER! Your end score is "+ score)
-    //If score >= highScoreLine, alert Congratulations and add name and score to High Scores list then view High Scores List
+
+    //hide question containers
+    $('#questionsContainer').addClass('hidden');
+    $('#answerList').addClass('hidden');
+
+    //Alert player to results
+    alert("GAME OVER! Your end score is "+ score);
+    
+    //If score is among top five, prompt to add name and score to High Scores list then view High Scores List
+    var topFive = sortScores();
+
+    if (score >= topFive[4].score) {
+        alert("CONGRATULATIONS! YOU'RE ONE OF OUR TOP SCORERS!")
+        addHighScore(score);
+    } 
+    
+    else if (score < topFive[4].score) {
+        alert("Oh dear. Epic failure. You don't know this show at all do you?")
+    }
+
+    else {
     //If score < highScoreLine, confirm try again
+        resetGame()
+    }
 }
 
 function addHighScore (score) {
+    var playerObj = {};
     playerObj.name = prompt("Enter your player name");
     playerObj.score = score;
     highScoreArray.push(playerObj);
-    console.log("Player Object: ", playerObj);
+    console.log("Player score posted: ", playerObj);
+    postHighScores();
+    $("#highScoresModal").modal("show");
     return playerObj;
 }
 
 function sortScores () {
     highScoreArray.sort(function(a,b){return b.score - a.score})
     var topFive = highScoreArray.slice(0,5);
-    console.log("High Scores after SORT: ", highScoreArray);
-    console.log("Top Five: ", topFive);
+    // console.log("High Scores after SORT: ", highScoreArray);
+    // console.log("Top Five: ", topFive);
     return topFive
 }
 
 function postHighScores () {
-    console.log("High Scores Array", highScoreArray);
+    // console.log("High Scores Array", highScoreArray);
+    $("#highScoresRows").replaceWith(`<tbody id="highScoresRows"></tbody>`);
     var topFive = sortScores();
     var rank = 0;
 
@@ -274,8 +314,6 @@ $( document ).ready(function() {
 
     $(document).on('click', ".answerListItem", function() {
         var chosen = $(this).attr("id");
-        console.log("Chosen: ", chosen);
-        // return chosen
         checkAnswer(chosen, rightAnswer);
     });
 });

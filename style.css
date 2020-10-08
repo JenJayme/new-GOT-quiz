@@ -1,18 +1,87 @@
 body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
     background-color: black;
     color: blanchedalmond;
     text-align: center;
     height: 100%;
 }
 
+.buttonDark {
+    background-color: black;
+    color: blanchedalmond;
+    border-radius: .5em;
+    height: 3em;
+    width: 7em;
+    font-size: larger;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.button {
+    position: relative;
+    border: none;
+    font-size: 28px;
+    color: #FFFFFF;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+.buttonDark:after {
+    content: "";
+    background: #90EE90;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+  }
+
+.buttonDark:hover {
+    box-shadow: 3px 3px 3px 3px rgba(139, 50, 139, 0.5);
+}
+
+  
+.buttonDark:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+  }
+  
+#welcomeDiv {
+    font-size: 15rem;
+    color: rgb(165, 165, 154)
+}
+
+#ready {
+    font-size: 5rem;
+    position: absolute;
+    text-align: center;
+    top: 65%;
+    left: 25%;
+}
+
 #questionsContainer, .answerList {
     padding-top: 2rem;
     padding-bottom: 2rem;
+    position: sticky;
     background-color: black;
     height: fit-content;
     opacity: 75%;
     color: blanchedalmond;
-}0-9
+}
 
 #questionsContainer {
     margin-top: 2rem;
@@ -47,7 +116,7 @@ body {
     font-size: 30px;
     position: relative;
     margin-top: 10%;
-    top: 30%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: blanchedalmond;
