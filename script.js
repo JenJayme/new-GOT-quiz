@@ -43,6 +43,9 @@ var penalty = 15;
 //Bucket for score, starts at 0.
 var score = 0;
 
+//To compare right answer to chosen answer
+var rightAnswer;
+
 //The key to use for storing the high scores in and retrieving the high scores from local storage.
 const LS_KEY = "High Scores";
 
@@ -119,47 +122,44 @@ function showQuestionAndAnswer(nextQuestion) {
         QNAObject = QandA[nextQuestion];
         QNAObject.question = QandA[nextQuestion].question;
         QNAObject.answers = QandA[nextQuestion].answers;
-        QNAObject.rightAnswer = QandA[nextQuestion].rightAnswer;
-        console.log(QNAObject);
+        rightAnswer = QandA[nextQuestion].rightAnswer;
+        // console.log(QNAObject);
 
-        // Create Question div
-        div = $('<div></div>');
-        div.addClass('question');
-        div.text(QNAObject.question);
-        $(questionsContainer).append(div);
+        // Post next question
+        $(questionsContainer).text(QNAObject.question);
 
-        // Create Answers div
+        // Post Answers
         for (var i = 0; i < QNAObject.answers.length; i++) {
             var answerOption = QNAObject.answers[i];
             var answerOptionID = QNAObject.answers.indexOf(answerOption);
             $("#answerList").append(`<li><button class="btn list-group-item answerListItem" id="${answerOptionID}">${answerOption}</button></li>`);
-            console.log("answerOptionID: ",answerOptionID)
         }
     }
+    console.log("Right Answer to question #"+answerOptionID+": ", rightAnswer);
+}
 
-
-    nextQuestion++;
-    console.log("Right Answer:", QNAObject.rightAnswer);
-    return QNAObject.rightAnswer;
+function clearAnswers() {
+    $("#answerList").replaceWith(`<ol id="answerList" class="list-group answerList"></ol>`);
 }
 
 function checkAnswer(chosen, rightAnswer) {
 
     console.log("Running checkAnswer function");
-    console.log("This =", this)
+    // console.log("This =", this)
     console.log("RightAnswer: ", rightAnswer);
     console.log("Chosen: ", chosen);
 
     if (chosen == rightAnswer) {
-        //TODO: awward points
         score = score + award;
         console.log("Correct! 500 points added to your score!")
     } else {
         penaltyDeduct();
-        // TODO: deduct time from timer
     }
 
-    postScore();
+    postScore();    
+    clearAnswers();
+    nextQuestion++;
+    showQuestionAndAnswer(nextQuestion)
 }
 
 function penaltyDeduct () {
@@ -174,6 +174,7 @@ function postScore () {
 
 function resetGame(){
     score = 0;
+    nextQuestion = 0;
     location.reload();
     startTimer();
     showQuestionAndAnswer(nextQuestion)
@@ -206,7 +207,6 @@ $( document ).ready(function() {
 
     $(document).on('click', ".answerListItem", function() {
         var chosen = $(this).attr("id");
-        var rightAnswer = 1;
         console.log("Chosen: ", chosen);
         // return chosen
         checkAnswer(chosen, rightAnswer);
