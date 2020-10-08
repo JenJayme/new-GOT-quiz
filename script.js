@@ -74,6 +74,8 @@ function setup () {
         $('#ready').addClass('hidden');
     });
 
+    postScore();
+
 }
 
 function showOpeningMessage () {
@@ -108,9 +110,10 @@ function showQuestionAndAnswer(nextQuestion) {
     $('#rollQuestions').addClass('hidden');
     $('#questionsContainer').removeClass('hidden');
     $('#answerList').removeClass('hidden');
-    var QNAObject, div, ul, li, button;
+    var QNAObject, div;
 
     for (var i = 0; i < QandA.length; i++) {
+        // Create an object with next question elements for easier reference
         QNAObject = QandA[nextQuestion];
         QNAObject.question = QandA[nextQuestion].question;
         QNAObject.answers = QandA[nextQuestion].answers;
@@ -123,6 +126,7 @@ function showQuestionAndAnswer(nextQuestion) {
         div.text(QNAObject.question);
         $(questionsContainer).append(div);
 
+        // Create Answers div
         for (var i = 0; i < QNAObject.answers.length; i++) {
             var answerOption = QNAObject.answers[i];
             var answerOptionID = QNAObject.answers.indexOf(answerOption);
@@ -131,31 +135,39 @@ function showQuestionAndAnswer(nextQuestion) {
         }
     }
 
+
     nextQuestion++;
     console.log("Right Answer:", QNAObject.rightAnswer);
     return QNAObject.rightAnswer;
 }
 
-function checkAnswer(chosen) {
+function checkAnswer(chosen, rightAnswer) {
 
     console.log("Running checkAnswer function");
     console.log("This =", this)
-    console.log("qao.rightAnswer: ", QNAObject.rightAnswer);
+    console.log("RightAnswer: ", rightAnswer);
     console.log("Chosen: ", chosen);
 
-    if (chosen === QNAObject.rightAnswer) {
+    if (chosen == rightAnswer) {
         //TODO: awward points
-        score = score + award
+        score = score + award;
+        console.log("Correct! 500 points added to your score!")
     } else {
         penaltyDeduct();
         // TODO: deduct time from timer
     }
+
+    postScore();
 }
 
 function penaltyDeduct () {
     timeLeft = timeLeft - penalty
+    console.log('Wrong Answer! A penalty was deducted from your time.')
     return timeLeft
-    console.log('Sorry, a penalty was deducted from your time.')
+}
+
+function postScore () {
+    $("#score").text("Score: " + score)
 }
 
 function viewHighScores() {
@@ -185,8 +197,11 @@ $( document ).ready(function() {
 
     $(document).on('click', ".answerListItem", function() {
         var chosen = $(this).attr("id");
-        console.log("Chosen: ", chosen)});
-        // checkAnswer(chosen);
+        var rightAnswer = 1;
+        console.log("Chosen: ", chosen);
+        // return chosen
+        checkAnswer(chosen, rightAnswer);
+    });
 });
 
 // $('#element').show("slow");
