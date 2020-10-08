@@ -52,12 +52,6 @@ var highScoreArray = [];
 //FUNCTIONS FOR MAJOR TASKS
 function setup () {
 
-    $(".answerListItem").on('click', function () {
-        var chosen = this.QNAObject.answers[i];
-        console.log("Clicked on answerListItem: ", chosen)
-        checkAnswer(chosen);
-    });
-
     $("#startBtn").on("click", function startQuiz () {
         showOpeningMessage();
         $('hero-text').addClass('hidden')
@@ -68,17 +62,24 @@ function setup () {
     $(".rollQuestions").on("click", function () {
         $("#instructionsModal").modal('hide');
         console.log('Rolling quiz. Time left = ' + timeLeft);
-        $("#rollQuestions").addClass('hidden');
-        alert("The timer will start with 75 seconds on the clock as soon as you click OK.")
+        $("#rollQuestions").removeClass('hidden');
+        // alert("The timer will start with 75 seconds on the clock as soon as you click OK.")
         startTimer();
         showQuestionAndAnswer(nextQuestion)
     });
+
+    $('#yes').on("click", function () {
+        console.log("Yes button clicked");
+        $('#welcomeDiv').addClass('hidden');
+        $('#ready').addClass('hidden');
+    });
+
 }
 
 function showOpeningMessage () {
     $('#welcomeDiv').removeClass('hidden');
-    $('#welcomeDiv').append("Ready to Start?");
-    $('#welcomeDiv').append(`<div><button id="Yes" class="btn bg-light rollQuestions">Yes</button></div>`);
+    $('#ready').append("Ready to Start?");
+    $('#yes').removeClass('hidden');
 }
 
 function startTimer() {
@@ -86,10 +87,9 @@ function startTimer() {
     setInterval(runClock, 1000)
 }
 
-function stoptimer() {
-    console.log('Timer stopped');
+function stopTimer() {
+    console.log('TIME EXPIRED!');
     clearInterval(sid);
-    $config.endtime_message ='Timer expired!';
 }
 
 function runClock() {
@@ -105,7 +105,9 @@ function runClock() {
 }
 
 function showQuestionAndAnswer(nextQuestion) {
-    $('.rollQuestions').addClass('hidden');
+    $('#rollQuestions').addClass('hidden');
+    $('#questionsContainer').removeClass('hidden');
+    $('#answerList').removeClass('hidden');
     var QNAObject, div, ul, li, button;
 
     for (var i = 0; i < QandA.length; i++) {
@@ -124,7 +126,7 @@ function showQuestionAndAnswer(nextQuestion) {
         for (var i = 0; i < QNAObject.answers.length; i++) {
             var answerOption = QNAObject.answers[i];
             var answerOptionID = QNAObject.answers.indexOf(answerOption);
-            $("#answerList").append(`<li><button class="btn list-group-item answerListItem" id=${answerOptionID}>${answerOption}</button></li>`);
+            $("#answerList").append(`<li><button class="btn list-group-item answerListItem" id="${answerOptionID}">${answerOption}</button></li>`);
             console.log("answerOptionID: ",answerOptionID)
         }
     }
@@ -135,7 +137,7 @@ function showQuestionAndAnswer(nextQuestion) {
 }
 
 function checkAnswer(chosen) {
-    // var chosen = $(select.answerListItem).val();
+
     console.log("Running checkAnswer function");
     console.log("This =", this)
     console.log("qao.rightAnswer: ", QNAObject.rightAnswer);
@@ -179,7 +181,12 @@ function viewHighScores() {
 
 $( document ).ready(function() {
 
-setup()
-      
-    // $("#instructionsModal").modal('show');
+    setup();
+
+    $(document).on('click', ".answerListItem", function() {
+        var chosen = $(this).attr("id");
+        console.log("Chosen: ", chosen)});
+        // checkAnswer(chosen);
 });
+
+// $('#element').show("slow");
