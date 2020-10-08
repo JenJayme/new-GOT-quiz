@@ -115,27 +115,36 @@ function showQuestionAndAnswer(nextQuestion) {
     $('#rollQuestions').addClass('hidden');
     $('#questionsContainer').removeClass('hidden');
     $('#answerList').removeClass('hidden');
-    var QNAObject, div;
+    var QNAObject;
 
-    for (var i = 0; i < QandA.length; i++) {
-        // Create an object with next question elements for easier reference
-        QNAObject = QandA[nextQuestion];
-        QNAObject.question = QandA[nextQuestion].question;
-        QNAObject.answers = QandA[nextQuestion].answers;
-        rightAnswer = QandA[nextQuestion].rightAnswer;
-        // console.log(QNAObject);
+    if (nextQuestion > QandA.length) {
 
-        // Post next question
-        $(questionsContainer).text(QNAObject.question);
+        endgame();
 
-        // Post Answers
-        for (var i = 0; i < QNAObject.answers.length; i++) {
-            var answerOption = QNAObject.answers[i];
-            var answerOptionID = QNAObject.answers.indexOf(answerOption);
-            $("#answerList").append(`<li><button class="btn list-group-item answerListItem" id="${answerOptionID}">${answerOption}</button></li>`);
+    } else {
+
+        for (var i = 0; i < QandA.length; i++) {
+            // Create an object with next question elements for easier reference
+            QNAObject = QandA[nextQuestion];
+            QNAObject.question = QandA[nextQuestion].question;
+            QNAObject.answers = QandA[nextQuestion].answers;
+            rightAnswer = QandA[nextQuestion].rightAnswer;
+            // console.log(QNAObject);
+
+            // Post next question
+            $(questionsContainer).text(QNAObject.question);
+
+            // Post Answers
+            for (var i = 0; i < QNAObject.answers.length; i++) {
+                var answerOption = QNAObject.answers[i];
+                var answerOptionID = QNAObject.answers.indexOf(answerOption);
+                $("#answerList").append(`<li><button class="btn list-group-item answerListItem" id="${answerOptionID}">${answerOption}</button></li>`);
+            }
         }
-    }
+
     console.log("Right Answer to question #"+answerOptionID+": ", rightAnswer);
+
+    }
 }
 
 function clearAnswers() {
@@ -179,6 +188,14 @@ function resetGame(){
     startTimer();
     showQuestionAndAnswer(nextQuestion)
 }
+
+
+function endGame () {
+    //Alert player to results: Game Over! Your Score: ___.
+    //If score >= highScoreLine, alert Congratulations and add name and score to High Scores list then view High Scores List
+    //If score < highScoreLine, confirm try again
+}
+
 
 function viewHighScores() {
     //Get a reference to the container where this info will be displayed.
