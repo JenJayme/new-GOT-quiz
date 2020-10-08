@@ -50,7 +50,32 @@ var rightAnswer;
 const LS_KEY = "High Scores";
 
 //A collection of high scores
-var highScoreArray = [];
+var highScoreArray = [
+    {
+        name: "Kamala Harris",
+        score: 10500
+    },
+    {
+        name: "Joe Biden",
+        score: 8000
+    },
+    {
+        name: "Donald Trump",
+        score: 2500
+    },
+    {
+        name: "Gavin Newsome",
+        score: 4500
+    },
+    {
+        name: "Mike Pence",
+        score: 3000
+    },
+    {
+        name: "Jen Jayme",
+        score: 9500
+    }
+];
 
 //FUNCTIONS FOR MAJOR TASKS
 function setup () {
@@ -78,7 +103,6 @@ function setup () {
     });
 
     postScore();
-
 }
 
 function showOpeningMessage () {
@@ -118,9 +142,7 @@ function showQuestionAndAnswer(nextQuestion) {
     var QNAObject;
 
     if (nextQuestion > QandA.length) {
-
         endgame();
-
     } else {
 
         for (var i = 0; i < QandA.length; i++) {
@@ -192,10 +214,36 @@ function resetGame(){
 
 function endGame () {
     //Alert player to results: Game Over! Your Score: ___.
+    alert("GAME OVER! Your end score is "+ score)
     //If score >= highScoreLine, alert Congratulations and add name and score to High Scores list then view High Scores List
     //If score < highScoreLine, confirm try again
 }
 
+function newHighScore (score) {
+    playerObj.name = prompt("Enter your player name");
+    playerObj.score = score;
+    highScoreArray.push(playerObj);
+    console.log("Player Object: ", playerObj);
+    return playerObj;
+}
+
+
+function postHighScores () {
+    console.log("High Scores Array", highScoreArray);
+    var rank = 0;
+
+    // array.forEach(function () {
+    //     var name = array.name;
+    //     var score = array.score;
+    //     rank ++;
+    //     $("#highScoresRows").append(`<tr><th scope="row">${rank}</th><td>${name}</td><td>${score}</td></tr>`)
+    // })
+
+    highScoreArray.forEach(player => {
+        rank ++;
+        $("#highScoresRows").append(`<tr><th scope="row">${rank}</th><td>${player.name}</td><td>${player.score}</td></tr>`)
+    })
+}
 
 function viewHighScores() {
     //Get a reference to the container where this info will be displayed.
@@ -221,6 +269,7 @@ function viewHighScores() {
 $( document ).ready(function() {
 
     setup();
+    postHighScores(highScoreArray);
 
     $(document).on('click', ".answerListItem", function() {
         var chosen = $(this).attr("id");
