@@ -90,13 +90,15 @@ function startTimer() {
 }
 
 function stopTimer() {
-    console.log('TIME EXPIRED!');
+    alert('TIME EXPIRED!');
+    if (confirm("Do you want to try again?"))
+        resetGame();
     clearInterval(sid);
 }
 
 function runClock() {
     $('#counter').text(timeLeft);
-    if (timeLeft === 0) {
+    if (timeLeft < 1) {
         stopTimer();
     } else {
         var newTime = --timeLeft;
@@ -168,6 +170,13 @@ function penaltyDeduct () {
 
 function postScore () {
     $("#score").text("Score: " + score)
+}
+
+function resetGame(){
+    score = 0;
+    location.reload();
+    startTimer();
+    showQuestionAndAnswer(nextQuestion)
 }
 
 function viewHighScores() {
