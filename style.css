@@ -5,64 +5,73 @@ body {
     text-align: center;
     height: 100%;
 }
-
-.buttonDark {
-    background-color: black;
-    color: blanchedalmond;
-    border-radius: .5em;
-    height: 3em;
+  
+.glow-on-hover {
     width: 7em;
-    font-size: larger;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    text-decoration: none;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.button {
-    position: relative;
+    height: 3em;
     border: none;
-    font-size: 28px;
-    color: #FFFFFF;
-    padding: 20px;
-    width: 200px;
-    text-align: center;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    text-decoration: none;
-    overflow: hidden;
+    outline: none;
+    color: #fff;
+    background: #111;
     cursor: pointer;
-  }
-  
-.buttonDark:after {
-    content: "";
-    background: #90EE90;
-    display: block;
-    position: absolute;
-    padding-top: 300%;
-    padding-left: 350%;
-    margin-left: -20px!important;
-    margin-top: -120%;
-    opacity: 0;
-    transition: all 0.8s
-  }
-
-.buttonDark:hover {
-    box-shadow: 3px 3px 3px 3px rgba(139, 50, 139, 0.5);
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
 }
 
-  
-.buttonDark:active:after {
-    padding: 0;
-    margin: 0;
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -6px;
+    left:-6px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
     opacity: 1;
-    transition: 0s
-  }
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
   
 #welcomeDiv {
     font-size: 15rem;
-    color: rgb(165, 165, 154)
+    color: rgba(165, 165, 154, .7);
+    /* -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(36, 2, 36); */
 }
 
 #ready {
