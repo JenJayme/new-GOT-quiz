@@ -34,7 +34,7 @@
     <ul class="navbar-nav mr-auto">
 
         <li class="nav-item">
-            <a  class="nav-link text-white" 
+            <a  class="nav-link" 
                 data-toggle="modal" 
                 data-target="#instructionsModal">
                 Instructions
@@ -57,12 +57,8 @@
 
     <div id="score" class="nav-item nav-link font-weight-bold">Score: </div>
 
-    <button class="animated-button1" id="startBtn" type="button">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        Start Quiz
+    <button class="animated-button1" id="resetBtn" type="button">
+        Reset Game
     </button>
 
 </nav>
@@ -74,15 +70,16 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div id="welcomeDiv" class="welcome-div hero-text hidden">Welcome
+            <div id="welcomeDiv" class="hero-text hidden">
+                <img src="./images/welcome-01.png" />
             </div>
-            <div id="ready">Shall we begin?</div>
-            <button id="yes" class="animated-button1 hidden">
+            <div id="ready"><img src="./images/shall-we-begin.png" class="mx-auto" /></div>
+            <button id="startBtn" class="animated-button1">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                Yes</button>
+                Start Game</button>
         </div>
     </div>
 </div>
@@ -142,7 +139,7 @@
                 <h3>Care to test your<br> Game of Thrones knowledge?
                 </h3><br>
 
-                <h5>Following are some questions about the Seven Kingdoms and those to live and rule there. 
+                <h5>Following are some questions about the Seven Kingdoms and those who live and rule there. 
                     <br><br>
                     Once you click start, you'll have 75 seconds to choose from several answers. 
                     <br><br>
@@ -150,8 +147,17 @@
                     When you play the game of thrones, <br>you win or you die.</h5>
             </div>
             <div class="modal-footer bg-dark">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary rollQuestions">Continue</button>
+
+                <button type="button" class="animated-button-secondary" data-dismiss="modal">Close</button>
+
+                <button type="button" 
+                        class="animated-button1 rollQuestions">
+                        Continue
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>                
+                </button>
             </div>
         </div>
     </div>
@@ -208,14 +214,14 @@
 
                 <button 
                     type="button" 
-                    class="btn btn-secondary" 
+                    class="animated-button-secondary" 
                     data-dismiss="modal">
                     Close
                 </button>
 
                 <button 
                     type="button" 
-                    class="btn btn-primary"
+                    class="animated-button1"
                     onclick={resetGame()}>
                     Continue
                 </button>

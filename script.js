@@ -20,6 +20,14 @@ var QandA = [
         question: "At the beginning of the series, how many children do Ned and Catelyn Stark have?",
         answers: ["Four", "Five", "Three", "Six"],
         rightAnswer: 1
+    }, {
+        question: "Who kills the Night King?",
+        answers: ["Jon Snow", "Daenerys Targaryen", "Arya Stark", "Bran Stark"],
+        rightAnswer: 2
+    }, {
+        question: "Who creates a special saddle for the paralyzed Bran to ride a horse again?",
+        answers: ["Tyrion Lannister", "Robb Stark", "Jon Snow", "Ned Stark"],
+        rightAnswer: 0
     }
 ];
 
@@ -88,18 +96,17 @@ function setup () {
 
     $("#startBtn").on("click", function startQuiz () {
         $("#welcomeDiv").hide();
-        $("#yes").hide();
+        $("#startBtn").hide();
         $("#ready").hide();
-        $('#startBtn').addClass('hidden');
         $('.rollQuestions').removeClass('hidden');
-        startTimer();
-        showQuestionAndAnswer(nextQuestion)
+        $("#instructionsModal").modal('show');     
+        // startTimer();
+        // showQuestionAndAnswer(nextQuestion)
     });
 
     $(".rollQuestions").on("click", function () {
         $("#instructionsModal").modal('hide');
         $("#welcomeDiv").hide();
-        $("#yes").hide();
         $("#ready").hide();
         console.log('Rolling quiz. Time left = ' + timeLeft);
         $("#rollQuestions").removeClass('hidden');
@@ -108,16 +115,17 @@ function setup () {
         showQuestionAndAnswer(nextQuestion)
     });
 
-    $('#yes').on("click", function () {
-        $('#welcomeDiv').addClass('hidden');
-        $('#yes').addClass('hidden');
-        $('#ready').addClass('hidden');
+    $('#resetBtn').on("click", function () {
+        $('#welcomeDiv').removeClass('hidden');
+        $('#ready').removeClass('hidden');
+        $("#instructionsModal").modal('show');    
     });
 
     postScore();
 }
 
 function showOpeningMessage () {
+    $("#startBtn").show();
     $('#welcomeDiv').removeClass('hidden');
     $('#welcomeDiv').show("slow");
     $('#ready').show("slow");
