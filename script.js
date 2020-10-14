@@ -28,7 +28,7 @@ var QandA = [
 var sid;
 
 //Amount of time left to complete the quiz.
-var timeLeft = 75000; //start at 75 seconds or 75000 milliseconds
+var timeLeft = 50000; //start at 50 seconds or 50000 milliseconds
 
 //index of question to retrieve, default to 0.
 var nextQuestion = 0;
@@ -124,7 +124,7 @@ function showOpeningMessage () {
 }
 
 function startTimer() {
-    timeLeft = 75;
+    timeLeft = 50;
     setInterval(runClock, 1000)
 }
 
