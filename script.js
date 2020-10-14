@@ -20,17 +20,8 @@ var QandA = [
         question: "At the beginning of the series, how many children do Ned and Catelyn Stark have?",
         answers: ["Four", "Five", "Three", "Six"],
         rightAnswer: 1
-    }, {
-        question: "Who kills the Night King?",
-        answers: ["Jon Snow", "Daenerys Targaryen", "Arya Stark", "Bran Stark"],
-        rightAnswer: 2
-    }, {
-        question: "Who creates a special saddle for the paralyzed Bran to ride a horse again?",
-        answers: ["Tyrion Lannister", "Robb Stark", "Jon Snow", "Ned Stark"],
-        rightAnswer: 0
     }
 ];
-
 // KEY VARIABLES
 
 //identifier for the instance of set internal call;
@@ -157,29 +148,66 @@ function runClock() {
 }
 
 function showQuestionAndAnswer(nextQuestion) {
-    console.log("Next Question Up: ", nextQuestion)
-    $('#rollQuestions').addClass('hidden');
+    console.log("Next Question Up: ", nextQuestion);
     $('#questionsContainer').removeClass('hidden');
     $('#answerList').removeClass('hidden');
-    var QNAObject;
+    var QNAObject = {};
 
     if (nextQuestion === QandA.length || timeLeft < 1) {
         endGame();
+    }
 
-    } else {
-
+    else {
         for (var i = 0; i < QandA.length; i++) {
-            // Create an object with next question elements for easier reference
             QNAObject = QandA[nextQuestion];
-            QNAObject.question = QandA[nextQuestion].question;
-            QNAObject.answers = QandA[nextQuestion].answers;
+            // var question = QandA[nextQuestion].question;
+            var answers = QandA[nextQuestion].answers;
+            var answerOptionID = QandA[nextQuestion].answers.indexOf(answers);
             rightAnswer = QandA[nextQuestion].rightAnswer;
-            // console.log(QNAObject);
+            console.log("QNA Object: ", QNAObject);
 
             // Post next question
-            $(questionsContainer).text(QNAObject.question);
+            $('#questionsContainer').text(QNAObject.question);
 
             // Post Answers
+            for (var i = 0; i < QNAObject.answers.length; i++) {
+                var answerOption = QNAObject.answers[i];
+                var answerOptionID = QNAObject.answers.indexOf(answerOption);
+                $("#answerList").append(`<li><button class="btn list-group-item answerListItem" id="${answerOptionID}">${answerOption}</button></li>`);
+            }
+        }
+
+    console.log("Right Answer to question "+nextQuestion+" is at index: ", rightAnswer);
+
+    }
+}
+
+function showQuestionAndAnswer2(nextQuestion) {
+    console.log("Next Question Up: ", nextQuestion);
+    $('#questionsContainer').removeClass('hidden');
+    $('#answerList').removeClass('hidden');
+    var QNAObject = {};
+
+    if (nextQuestion === QandA.length || timeLeft < 1) {
+        endGame();
+    }
+
+    else {
+        //TO DO: REWRITE THIS AS A MAP FUNCTION
+        for (var i = 0; i < QandA.length; i++) {
+            QNAObject = QandA[nextQuestion];
+            var question = QandA[nextQuestion].question;
+            var answers = QandA[nextQuestion].answers;
+            var answerOptionID = QNAObject.answers.indexOf(answers);
+            rightAnswer = QandA[nextQuestion].rightAnswer;
+            // console.log("QNA Object: ", QNAObject);
+            
+
+            // Post next question
+            $('#questionsContainer').text(question);
+
+            // Post Answers
+            //TO DO: REWRITE THIS AS A MAP FUNCTION
             for (var i = 0; i < QNAObject.answers.length; i++) {
                 var answerOption = QNAObject.answers[i];
                 var answerOptionID = QNAObject.answers.indexOf(answerOption);
