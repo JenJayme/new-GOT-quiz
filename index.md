@@ -1,6 +1,8 @@
 ### Game of Thrones Fan Quiz
 
-This is a slightly cleaned up version of my earliest javascript assignment for  Berkeley Coding Boot Camp.  The challenge, posed in week 3, was to create a timed quiz game with interactions produced primarily through DOM manipulation using vanilla Javascript and jQuery, and include a high scores record.  I've done some cleanup of the code to make it work properly.  As time permits, I plan to add more questions and more dynamic features, as well as rewrite the traditional For Loops with map functions.  Additions and collaborations are welcome.
+This is a slightly cleaned up version of my earliest javascript assignment for  Berkeley Coding Boot Camp.  The challenge, posed in week 3, was to create a timed quiz game with interactions produced primarily through DOM manipulation using vanilla Javascript and jQuery, and include a high scores record.  I've done some cleanup of the code to make it work properly.  As time permits, plans for enhancement include adding more questions, more dynamic features, replacing simple alert boxes with nicer modals, and rewriting the traditional For Loops with map functions.  
+
+Additions and collaborations from other GOT fans are welcome!
 
 <hr>
 
@@ -21,7 +23,6 @@ This is a slightly cleaned up version of my earliest javascript assignment for  
 <hr>
 
 ## [Visuals](#visuals)
-
 
 ![Example Gif](./example.gif)
 
